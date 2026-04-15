@@ -459,6 +459,24 @@ footer strong{color:#fff;}
   .gallery-grid{grid-template-columns:1fr;}
 }
 
+
+/* 지도 오버레이 - 모바일 앱 자동실행 방지 */
+.map-overlay { cursor: pointer; }
+.map-overlay:hover::after {
+  content: '📍 카카오맵에서 크게 보기';
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,.65);
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 </style>
 </head>
 <body>
@@ -632,9 +650,10 @@ footer strong{color:#fff;}
       <button class="btn-cyan" onclick="sp('customer-consult','고객센터','공사상담')">💬 게시판 상담하기</button>
     </div>
   </section>
-  <div style="width:100%;height:320px;overflow:hidden;">
+  <div style="width:100%;height:320px;overflow:hidden;position:relative;">
   <iframe src="https://map.kakao.com/?map_type=TYPE_MAP&q=%EA%B2%BD%EC%9D%B8%EC%BD%94%ED%82%B9&hId=1597768137&mode=place&urlLevel=3&urlX=428260&urlY=1124672"
-    width="100%" height="320" style="border:0;display:block;" allowfullscreen loading="lazy"></iframe>
+    width="100%" height="320" style="border:0;display:block;pointer-events:none;" loading="lazy"></iframe>
+  <div style="position:absolute;inset:0;z-index:1;"></div>
 </div>
 </div>
 
@@ -711,9 +730,10 @@ const PC = {
 </table>`,
 
   'company-map':`<h2 class="page-title">오시는 길</h2>
-<div style="width:100%;height:320px;overflow:hidden;border:1px solid #ddd;border-radius:4px;margin-bottom:22px;">
+<div style="width:100%;height:320px;overflow:hidden;border:1px solid #ddd;border-radius:4px;margin-bottom:22px;position:relative;">
   <iframe src="https://map.kakao.com/?map_type=TYPE_MAP&q=%EA%B2%BD%EC%9D%B8%EC%BD%94%ED%82%B9&hId=1597768137&mode=place&urlLevel=3&urlX=428260&urlY=1124672"
-    width="100%" height="320" style="border:0;display:block;" loading="lazy" allowfullscreen></iframe>
+    width="100%" height="320" style="border:0;display:block;pointer-events:none;" loading="lazy"></iframe>
+  <div style="position:absolute;inset:0;z-index:1;" onclick="window.open('https://kko.to/Wq-Jgo-OUA','_blank');" title="카카오맵에서 크게 보기" class="map-overlay"></div>
 </div>
 <div class="loc-grid">
   <div class="loc-item"><h4>주소</h4><p>인천광역시 서구 승학로288번길 7<br>지번 : 연희동 689-19</p></div>
