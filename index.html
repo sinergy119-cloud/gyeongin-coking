@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>베란다 방수전문 경인코킹</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Montserrat:wght@400;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --blue: #1a5fa8;
+    --blue-dark: #0d4080;
+    --blue-light: #e8f0fa;
+    --red: #d32f2f;
+    --cyan: #0097c4;
+    --gray-bg: #f4f4f4;
+    --text: #333;
+    --text-light: #666;
+  }
+
+  body { font-family: 'Noto Sans KR', sans-serif; color: var(--text); }
+
+  /* ── TOP BAR ── */
+  .top-bar {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 40px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    font-size: 12px;
+    color: #888;
+  }
+  .top-bar a { color: #888; text-decoration: none; }
+  .top-bar a:hover { color: var(--blue); }
+  .top-bar span { color: #ccc; }
+
+  /* ── HEADER ── */
+  header {
+    background: #fff;
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo { text-decoration: none; }
+  .logo .sub { font-size: 10px; color: #999; letter-spacing: 1px; display: block; margin-bottom: 2px; }
+  .logo .main {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 26px; font-weight: 800;
+    color: var(--blue);
+    letter-spacing: -0.5px;
+  }
+  .logo .main span { color: var(--cyan); }
+
+  nav { display: flex; gap: 0; margin-left: auto; }
+  nav a {
+    padding: 10px 22px;
+    font-size: 14px; font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    border-right: 1px solid #eee;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  nav a:first-child { border-left: 1px solid #eee; }
+  nav a:hover { color: var(--blue); background: var(--blue-light); }
+
+  /* ── HERO SLIDER ── */
+  .hero {
+    position: relative;
+    height: 420px;
+    overflow: hidden;
+  }
+  .slides { display: flex; height: 100%; transition: transform .6s ease; }
+  .slide {
+    min-width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .slide-bg {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .slide:nth-child(1) .slide-bg {
+    background: linear-gradient(135deg, #0a3d6b 0%, #1a7ab5 40%, #87ceeb 100%);
+  }
+  .slide:nth-child(2) .slide-bg {
+    background: linear-gradient(135deg, #1a5fa8 0%, #2196f3 50%, #b3d9f7 100%);
+  }
+  .slide:nth-child(3) .slide-bg {
+    background: linear-gradient(135deg, #0d4080 0%, #1565c0 50%, #90caf9 100%);
+  }
+  /* 건물 실루엣 SVG 배경 */
+  .slide-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 420'%3E%3Crect x='700' y='80' width='60' height='340' fill='rgba(255,255,255,.08)'/%3E%3Crect x='780' y='40' width='90' height='380' fill='rgba(255,255,255,.06)'/%3E%3Crect x='890' y='100' width='70' height='320' fill='rgba(255,255,255,.07)'/%3E%3Crect x='980' y='60' width='50' height='360' fill='rgba(255,255,255,.05)'/%3E%3Crect x='1050' y='120' width='80' height='300' fill='rgba(255,255,255,.06)'/%3E%3Crect x='1150' y='80' width='60' height='340' fill='rgba(255,255,255,.05)'/%3E%3C/svg%3E") center/cover no-repeat;
+  }
+  .slide-text {
+    position: relative; z-index: 2;
+    text-align: center; color: #fff;
+  }
+  .slide-text h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 36px; font-weight: 700;
+    text-shadow: 0 2px 12px rgba(0,0,0,.3);
+    margin-bottom: 12px;
+  }
+  .slide-text p {
+    font-size: 16px; font-weight: 300;
+    text-shadow: 0 1px 6px rgba(0,0,0,.3);
+    line-height: 1.8;
+  }
+  .hero-dots {
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 10;
+  }
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,.4); cursor: pointer;
+    transition: background .3s;
+  }
+  .dot.active { background: #fff; }
+  .hero-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 40px; height: 40px; background: rgba(255,255,255,.2);
+    border: none; cursor: pointer; color: #fff; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 10; transition: background .2s;
+  }
+  .hero-arrow:hover { background: rgba(255,255,255,.35); }
+  .hero-prev { left: 16px; }
+  .hero-next { right: 16px; }
+
+  /* ── SERVICE CARDS ── */
+  .service-section {
+    background: var(--gray-bg);
+    padding: 50px 40px;
+  }
+  .cards {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .card {
+    background: #fff; border-radius: 4px;
+    overflow: hidden; text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    transition: transform .2s, box-shadow .2s;
+    cursor: pointer;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.12); }
+  .card-img {
+    width: 100%; height: 200px;
+    object-fit: cover;
+  }
+  /* 이미지 대체 그라디언트 */
+  .card-img-placeholder {
+    width: 100%; height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+  }
+  .card:nth-child(1) .card-img-placeholder { background: linear-gradient(135deg, #8d6e63, #a1887f); }
+  .card:nth-child(2) .card-img-placeholder { background: linear-gradient(135deg, #455a64, #607d8b); }
+  .card:nth-child(3) .card-img-placeholder { background: linear-gradient(135deg, #1565c0, #1976d2); }
+  .card h3 {
+    padding: 16px;
+    font-size: 16px; font-weight: 500;
+    color: var(--text);
+  }
+
+  /* ── ICON SECTION ── */
+  .icon-section {
+    background: #fff;
+    padding: 60px 40px;
+  }
+  .icons {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    text-align: center;
+  }
+  .icon-item { cursor: pointer; padding: 20px; }
+  .icon-item:hover .icon-circle { background: var(--blue-light); }
+  .icon-circle {
+    width: 120px; height: 120px;
+    margin: 0 auto 16px;
+    background: #f0f4f8;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .icon-circle svg { width: 60px; height: 60px; }
+  .icon-item h3 {
+    font-size: 16px; font-weight: 500; color: var(--text);
+  }
+
+  /* ── BANNER ── */
+  .banner {
+    background: #e8f3fb;
+    padding: 40px 40px;
+    text-align: center;
+  }
+  .banner p {
+    font-size: 17px; color: var(--text);
+    line-height: 2;
+  }
+  .banner strong { color: var(--blue); font-weight: 700; }
+
+  /* ── CTA ── */
+  .cta {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='200'%3E%3Crect fill='%23222'/%3E%3C/svg%3E") center/cover;
+    background-color: #1a1a2e;
+    padding: 50px 40px;
+    text-align: center;
+    color: #fff;
+  }
+  .cta p { font-size: 15px; color: #bbb; margin-bottom: 12px; }
+  .cta .phone {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 42px; font-weight: 700;
+    color: #fff; margin-bottom: 24px;
+    letter-spacing: 2px;
+  }
+  .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .btn-red {
+    padding: 14px 36px;
+    background: var(--red); color: #fff;
+    border: none; font-size: 15px; font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer; border-radius: 2px;
+    transition: background .2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-red:hover { background: #b71c1c; }
+  .btn-cyan {
+    padding: 14px 36px;
+    background: var(--cyan); color: #fff;
+    border: none; font-size: 15px; font-weight: 500;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer; border-radius: 2px;
+    transition: background .2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-cyan:hover { background: #00789c; }
+
+  /* ── MAP ── */
+  .map-section {
+    height: 300px;
+    background: #e0e8ef;
+    position: relative;
+    overflow: hidden;
+  }
+  .map-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #cfd8dc, #b0bec5);
+    gap: 12px;
+  }
+  .map-placeholder svg { width: 48px; height: 48px; fill: #546e7a; }
+  .map-placeholder p { color: #546e7a; font-size: 15px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1a1a2e;
+    color: #aaa;
+    padding: 30px 40px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 2;
+  }
+  footer strong { color: #fff; }
+
+  /* ── FLOATING ── */
+  .floating {
+    position: fixed; right: 20px; bottom: 40px;
+    display: flex; flex-direction: column; gap: 8px;
+    z-index: 200;
+  }
+  .float-btn {
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,.2);
+    text-decoration: none; border: none;
+    transition: transform .2s;
+  }
+  .float-btn:hover { transform: scale(1.1); }
+  .float-call { background: var(--red); color: #fff; }
+  .float-chat { background: #fee500; color: #333; font-size: 14px; font-weight: 700; }
+  .float-top { background: #333; color: #fff; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <a href="#">HOME</a>
+  <span>|</span>
+  <a href="#">Contact us</a>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="logo">
+    <span class="sub">베란다 방수전문업체</span>
+    <span class="main">경인<span>COKING</span></span>
+  </a>
+  <nav>
+    <a href="#">경인코킹</a>
+    <a href="#">누수란</a>
+    <a href="#">공사방법/비용</a>
+    <a href="#">공사실적</a>
+    <a href="#">예약현황</a>
+    <a href="#">고객센터</a>
+    <a href="#">인재채용</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="slides" id="slides">
+    <div class="slide">
+      <div class="slide-bg"></div>
+      <div class="slide-text">
+        <h2>Welcome to 경인COKING</h2>
+        <p>항상 보다 나은 서비스와 최고의 기술로<br>베란다방수를 저희 경인코킹이 책임지겠습니다.</p>
+      </div>
+    </div>
+    <div class="slide">
+      <div class="slide-bg"></div>
+      <div class="slide-text">
+        <h2>외벽크랙 &amp; 실리콘 전문</h2>
+        <p>20년 이상의 풍부한 시공 경험<br>완벽한 방수 솔루션을 제공합니다.</p>
+      </div>
+    </div>
+    <div class="slide">
+      <div class="slide-bg"></div>
+      <div class="slide-text">
+        <h2>누수문제 100% 해결</h2>
+        <p>경인코킹은 고객 만족을 최우선으로<br>신속하고 정확한 시공을 보장합니다.</p>
+      </div>
+    </div>
+  </div>
+  <button class="hero-arrow hero-prev" onclick="moveSlide(-1)">&#10094;</button>
+  <button class="hero-arrow hero-next" onclick="moveSlide(1)">&#10095;</button>
+  <div class="hero-dots" id="dots">
+    <div class="dot active" onclick="goSlide(0)"></div>
+    <div class="dot" onclick="goSlide(1)"></div>
+    <div class="dot" onclick="goSlide(2)"></div>
+  </div>
+</section>
+
+<!-- SERVICE CARDS -->
+<section class="service-section">
+  <div class="cards">
+    <div class="card">
+      <div class="card-img-placeholder">🏚️</div>
+      <h3>누수란</h3>
+    </div>
+    <div class="card">
+      <div class="card-img-placeholder">🔧</div>
+      <h3>공사방법/비용</h3>
+    </div>
+    <div class="card">
+      <div class="card-img-placeholder">🏢</div>
+      <h3>공사실적</h3>
+    </div>
+  </div>
+</section>
+
+<!-- ICON SECTION -->
+<section class="icon-section">
+  <div class="icons">
+    <div class="icon-item">
+      <div class="icon-circle">
+        <!-- 공지사항 아이콘 -->
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="22" r="14" stroke="#1a5fa8" stroke-width="2.5"/>
+          <path d="M20 38 C20 38 14 52 32 52 C50 52 44 38 44 38" stroke="#1a5fa8" stroke-width="2.5" fill="none"/>
+          <circle cx="44" cy="20" r="8" fill="#1a5fa8" opacity=".15"/>
+          <path d="M40 16 L44 20 L52 14" stroke="#1a5fa8" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>공지사항</h3>
+    </div>
+    <div class="icon-item">
+      <div class="icon-circle">
+        <!-- 공사후기 아이콘 -->
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="28" cy="22" r="12" stroke="#1a5fa8" stroke-width="2.5"/>
+          <path d="M17 38 C17 38 10 52 28 52" stroke="#1a5fa8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <rect x="34" y="28" width="22" height="20" rx="3" stroke="#1a5fa8" stroke-width="2.5"/>
+          <path d="M38 35 L52 35 M38 40 L48 40" stroke="#1a5fa8" stroke-width="2" stroke-linecap="round"/>
+          <path d="M42 28 L42 24 C42 21.8 43.8 20 46 20 C48.2 20 50 21.8 50 24 L50 28" stroke="#1a5fa8" stroke-width="2.5"/>
+        </svg>
+      </div>
+      <h3>공사후기</h3>
+    </div>
+    <div class="icon-item">
+      <div class="icon-circle">
+        <!-- 예약현황 아이콘 -->
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="28" cy="22" r="12" stroke="#1a5fa8" stroke-width="2.5"/>
+          <path d="M17 38 C17 38 10 52 28 52 L36 52" stroke="#1a5fa8" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <rect x="36" y="30" width="20" height="22" rx="3" stroke="#1a5fa8" stroke-width="2.5"/>
+          <path d="M40 26 L40 34 M52 26 L52 34" stroke="#1a5fa8" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M40 40 L46 46 L54 38" stroke="#1a5fa8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>예약현황</h3>
+    </div>
+  </div>
+</section>
+
+<!-- BANNER -->
+<section class="banner">
+  <p>
+    <strong>경인코킹</strong>은 외벽크랙과 실리콘 노화로 발생되는 모든 누수문제를 <strong>100% 해결!</strong><br>
+    완벽함을 추구하는 베란다 방수 전문업체입니다.
+  </p>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <p>견적문의 및 기타 상담이 필요하신가요? 언제든지 문의주세요.</p>
+  <div class="phone">대표번호 : 031-000-0000</div>
+  <div class="cta-btns">
+    <a href="tel:031-000-0000" class="btn-red">📱 모바일 바로 통화하기</a>
+    <a href="#" class="btn-cyan">💬 게시판 상담하기</a>
+  </div>
+</section>
+
+<!-- MAP -->
+<div class="map-section">
+  <div class="map-placeholder">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+    </svg>
+    <p>경기도 인천 · 경기 지역 전문 시공</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <strong>경인코킹</strong> &nbsp;|&nbsp; 대표 : 홍길동 &nbsp;|&nbsp; 사업자등록번호 : 000-00-00000<br>
+    주소 : 경기도 인천시 &nbsp;|&nbsp; Tel : 031-000-0000 &nbsp;|&nbsp; E-mail : gyeongincoking@naver.com
+  </p>
+  <p style="margin-top:8px; font-size:12px;">Copyright © 경인코킹 All Rights Reserved.</p>
+</footer>
+
+<!-- FLOATING BUTTONS -->
+<div class="floating">
+  <a href="tel:031-000-0000" class="float-btn float-call" title="전화문의">📞</a>
+  <a href="#" class="float-btn float-chat" title="카카오 상담">K</a>
+  <button class="float-btn float-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="맨 위로">▲</button>
+</div>
+
+<script>
+  let cur = 0;
+  const slides = document.getElementById('slides');
+  const dots = document.querySelectorAll('.dot');
+  const total = 3;
+
+  function goSlide(n) {
+    cur = n;
+    slides.style.transform = `translateX(-${cur * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+  }
+  function moveSlide(dir) {
+    cur = (cur + dir + total) % total;
+    goSlide(cur);
+  }
+  setInterval(() => moveSlide(1), 4000);
+</script>
+</body>
+</html>
